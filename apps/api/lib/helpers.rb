@@ -28,5 +28,9 @@ module API
       missing = fields.map(&:to_s) - params.delete_if{|_,v| v.blank?}.keys
       invalid_params(missing) unless missing.empty?
     end
+
+    def rom
+      ROM.env
+    end
   end
 end

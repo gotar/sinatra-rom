@@ -5,12 +5,12 @@ require_relative 'validators/product_validator'
 module API
   class ProductApp < API::Base
     get '/products' do
-      products = ROM.env.read(:products).all.to_a
+      products = rom.read(:products).all.to_a
       json({products: products})
     end
 
     get '/products/:id' do |id|
-      if product = ROM.env.read(:products).by_id(id).first
+      if product = rom.read(:products).by_id(id).first
         json({products: product})
       else
         record_not_found(id)
@@ -20,7 +20,7 @@ module API
     post '/products' do
       begin
         attrs = params.slice('name')
-        result = ROM.env.command(:products).try { create(attrs) }
+        result = rom.command(:products).try { create(attrs) }
         status 201
         json({products: result.value})
       rescue ValidationError => e
@@ -31,7 +31,7 @@ module API
     patch '/products/:id' do |id|
       begin
         attrs = params.slice('name')
-        result = ROM.env.command(:products).try { update(:by_id, id).set(attrs) }
+        result = rom.command(:products).try { update(:by_id, id).set(attrs) }
         json({products: result.value})
       rescue Sequel::DatabaseError => e
         record_not_found(id)
@@ -39,7 +39,7 @@ module API
     end
 
     delete '/products/:id' do |id|
-      result = ROM.env.command(:products).try { delete(:by_id, id) }
+      result = rom.command(:products).try { delete(:by_id, id) }
       result.value ? json({message: 'OK'}) : record_not_found(id)
     end
   end
