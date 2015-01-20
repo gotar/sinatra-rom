@@ -9,6 +9,7 @@ module API
     attribute :password_hash, String
     attribute :token, String, default: :generate_token
 
+
     def password
       @password ||= ::BCrypt::Password.new(password_hash)
     end

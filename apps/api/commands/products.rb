@@ -1,6 +1,7 @@
 ROM.commands(:products) do
   define(:create) do
     input API::Product
+    validator ProductValidator
     result :one
   end
 

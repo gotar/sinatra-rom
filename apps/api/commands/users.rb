@@ -1,6 +1,7 @@
 ROM.commands(:users) do
   define(:create) do
     input API::User
+    validator UserValidator
     result :one
   end
 

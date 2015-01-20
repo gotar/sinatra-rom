@@ -32,6 +32,9 @@ GEM
     ice_nine (0.11.1)
     inflecto (0.0.2)
     json (1.8.2)
+    lotus-utils (0.3.3)
+    lotus-validations (0.2.2)
+      lotus-utils (~> 0.3, >= 0.3.3)
     memoizable (0.4.2)
       thread_safe (~> 0.3, >= 0.3.1)
     minitest (5.5.1)
@@ -93,6 +96,7 @@ DEPENDENCIES
   bundler
   database_cleaner
   dotenv
+  lotus-validations
   multi_json
   oj
   puma
