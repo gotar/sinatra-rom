@@ -10,9 +10,10 @@ module API
     end
 
     get '/products/:id' do |id|
-      if product = rom.read(:products).by_id(id).first
+      begin
+        product = rom.read(:products).by_id(id).one!
         json({products: product})
-      else
+      rescue ROM::TupleCountMismatchError
         record_not_found(id)
       end
     end
@@ -20,27 +21,23 @@ module API
     post '/products' do
       begin
         attrs = params.slice('name')
-        result = rom.command(:products).try { create(attrs) }
+        result = rom.command(:products).create.call(attrs)
         status 201
-        json({products: result.value})
+        json({products: result})
       rescue ValidationError => e
         json_error(422, e.message)
       end
     end
 
     patch '/products/:id' do |id|
-      begin
-        attrs = params.slice('name')
-        result = rom.command(:products).try { update(:by_id, id).set(attrs) }
-        json({products: result.value})
-      rescue Sequel::DatabaseError => e
-        record_not_found(id)
-      end
+      attrs = params.slice('name')
+      result = rom.command(:products).update.by_id(id).set(attrs)
+      result ? json({products: result}) : record_not_found(id)
     end
 
     delete '/products/:id' do |id|
-      result = rom.command(:products).try { delete(:by_id, id) }
-      result.value ? json({message: 'OK'}) : record_not_found(id)
+      result = rom.command(:products).delete.by_id(id).call
+      result ? json({message: 'OK'}) : record_not_found(id)
     end
   end
 end

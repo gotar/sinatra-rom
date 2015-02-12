@@ -1,3 +1,23 @@
+GIT
+  remote: git://github.com/rom-rb/rom-sql.git
+  revision: 104e689beb07c1af30c6a872161791609bf487a2
+  specs:
+    rom-sql (0.3.2)
+      equalizer (~> 0.0, >= 0.0.9)
+      rom (~> 0.6, >= 0.6.0)
+      sequel (~> 4.18)
+
+GIT
+  remote: git://github.com/rom-rb/rom.git
+  revision: ec112aff1f26e157b60ff9d5913e9089494a2f5a
+  specs:
+    rom (0.6.0)
+      descendants_tracker (~> 0.0, >= 0.0.4)
+      equalizer (~> 0.0, >= 0.0.9)
+      inflecto (~> 0.0, >= 0.0.2)
+      thread_safe (~> 0.3)
+      transproc (~> 0.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -7,21 +27,13 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
-    adamantium (0.2.0)
-      ice_nine (~> 0.11.0)
-      memoizable (~> 0.4.0)
-    addressable (2.3.6)
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
       thread_safe (~> 0.3, >= 0.3.1)
-    bcrypt (3.1.9)
-    charlatan (0.1.0)
+    bcrypt (3.1.10)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
-    concord (0.1.5)
-      adamantium (~> 0.2.0)
-      equalizer (~> 0.0.9)
     database_cleaner (1.4.0)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
@@ -32,45 +44,33 @@ GEM
     ice_nine (0.11.1)
     inflecto (0.0.2)
     json (1.8.2)
-    lotus-utils (0.3.3)
-    lotus-validations (0.2.2)
-      lotus-utils (~> 0.3, >= 0.3.3)
-    memoizable (0.4.2)
-      thread_safe (~> 0.3, >= 0.3.1)
+    lotus-utils (0.3.4)
+    lotus-validations (0.2.4)
+      lotus-utils (~> 0.3, >= 0.3.4)
     minitest (5.5.1)
     multi_json (1.10.1)
-    oj (2.11.3)
-    puma (2.10.2)
+    oj (2.11.4)
+    puma (2.11.1)
       rack (>= 1.1, < 2.0)
     rack (1.6.0)
     rack-protection (1.5.3)
       rack
     rack-test (0.6.3)
       rack (>= 1.0)
-    rom (0.5.0)
-      addressable (~> 2.3)
-      charlatan (~> 0.1, >= 0.1)
-      concord (~> 0.1, >= 0.1.4)
-      equalizer (~> 0.0, >= 0.0.9)
-      inflecto (~> 0.0, >= 0.0.2)
-      transproc (~> 0.1)
-    rom-sql (0.3.2)
-      equalizer (~> 0.0, >= 0.0.9)
-      rom (~> 0.5, >= 0.5.0)
-      sequel (~> 4.17)
-    rspec (3.1.0)
-      rspec-core (~> 3.1.0)
-      rspec-expectations (~> 3.1.0)
-      rspec-mocks (~> 3.1.0)
-    rspec-core (3.1.7)
-      rspec-support (~> 3.1.0)
-    rspec-expectations (3.1.2)
+    rspec (3.2.0)
+      rspec-core (~> 3.2.0)
+      rspec-expectations (~> 3.2.0)
+      rspec-mocks (~> 3.2.0)
+    rspec-core (3.2.0)
+      rspec-support (~> 3.2.0)
+    rspec-expectations (3.2.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.1.0)
-    rspec-mocks (3.1.3)
-      rspec-support (~> 3.1.0)
-    rspec-support (3.1.2)
-    sequel (4.18.0)
+      rspec-support (~> 3.2.0)
+    rspec-mocks (3.2.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.2.0)
+    rspec-support (3.2.1)
+    sequel (4.19.0)
     sinatra (1.4.5)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -101,7 +101,8 @@ DEPENDENCIES
   oj
   puma
   rack-test
-  rom-sql
+  rom!
+  rom-sql!
   rspec
   sinatra
   sqlite3

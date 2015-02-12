@@ -1,10 +1,8 @@
 require 'virtus'
-require 'rom-sql'
-require 'sqlite3'
 require_relative 'api/product_app'
 require_relative 'api/user_app'
 require_relative 'api/session_app'
-require_relative 'api/lib/db'
+require_relative '../db/setup'
 
 module API
   class App < Sinatra::Base
