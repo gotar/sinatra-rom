@@ -1,5 +1,5 @@
-ROM.relation(:users) do
-  def all
+class Users < ROM::Relation[:sql]
+  def ordered
     order(:id)
   end
 
@@ -9,6 +9,10 @@ ROM.relation(:users) do
 
   def login_by(email)
     select(:token, :password_hash).where(email: email)
+  end
+
+  def by_token(token)
+    where(token: token)
   end
 end
 

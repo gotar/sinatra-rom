@@ -4,10 +4,11 @@ RSpec.describe 'GET /users/:id' do
   include AppSetup
 
   it_behaves_like "API over HTTPS with Basic Auth" do
-    let(:do_request) { user_call(base_params) }
+    let(:do_request) { user_call }
+    let!(:login) { create_user.value }
 
     context 'missing data' do
-      before { user_call({id: 'foo'}) }
+      before { user_call(base_params.merge({id: 'foo'})) }
 
       it 'responds with 404 HTTP code if Record Not Found' do
         expect(last_response.status).to eq(404)
@@ -15,7 +16,7 @@ RSpec.describe 'GET /users/:id' do
     end
 
     context 'data exists' do
-      before { user_call(base_params) }
+      before { user_call }
 
       it 'responds with 200 HTTP code' do
         expect(last_response.status).to eq(200)
@@ -31,19 +32,20 @@ RSpec.describe 'GET /users/:id' do
         expect(res).to be_a(Hash)
         expect(res).to have_key('users')
         expect(res['users']).to be_a(Hash)
-        expect(res['users']['email']).to eq('example@example.com')
+        expect(res['users']['email']).to match(/example(.)+@example\.com/)
       end
     end
   end
 
   private
-  def user_call(params={})
+  def user_call(params=base_params)
     get "/users/#{params[:id]}", params, base_env
   end
 
   def base_params
     {
-      id: create_user.value[:id]
+      id: create_user.value[:id],
+      access_token: login[:token]
     }
   end
 end

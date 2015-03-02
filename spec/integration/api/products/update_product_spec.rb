@@ -5,6 +5,7 @@ RSpec.describe 'PATCH /products/:id' do
 
   it_behaves_like "API over HTTPS with Basic Auth" do
     let(:do_request){ update_product_call }
+    let!(:login) { create_user.value }
 
     context 'missing record' do
       before { update_product_call(id: 'foo') }
@@ -49,6 +50,12 @@ RSpec.describe 'PATCH /products/:id' do
 
   private
   def update_product_call(params={})
-    patch "/products/#{params[:id]}", params, base_env
+    patch "/products/#{params[:id]}", base_params.merge(params), base_env
+  end
+
+  def base_params
+    {
+      access_token: login[:token]
+    }
   end
 end

@@ -7,8 +7,8 @@ RSpec.describe 'POST /users' do
     let(:do_request){ create_user_call }
 
     context 'invalid params' do
-      let(:do_request){ create_user_call(email: nil) }
-      before { create_user_call(email: nil) }
+      let(:do_request){ create_user_call(email: 'foo_bar') }
+      before { create_user_call(email: 'foo_bar') }
 
       it 'returns 422 HTTP error for invalid params' do
         expect(last_response.status).to eq(422)
@@ -42,6 +42,13 @@ RSpec.describe 'POST /users' do
         expect(res['users']).to be_a(Hash)
         expect(res['users']['email']).to eq(base_params[:email])
         expect(res['users']['token']).to_not be_nil
+      end
+
+      it 'returns error when email is not uniq' do
+        create_user_call
+
+        expect(last_response.status).to eq(422)
+        expect(json_response['message']).to eq('SQLite3::ConstraintException: UNIQUE constraint failed: users.email')
       end
     end
   end

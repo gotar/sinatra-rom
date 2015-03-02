@@ -14,7 +14,7 @@ Dotenv.load
 
 class App < Sinatra::Base
   enable :sessions, :protection
-  set :session_secret, ENV['SECRET']
+  set :session_secret, ENV.fetch('SECRET')
 
   use Rack::Deflater
 

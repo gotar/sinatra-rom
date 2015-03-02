@@ -5,6 +5,7 @@ RSpec.describe 'GET /users' do
 
   it_behaves_like "API over HTTPS with Basic Auth" do
     let(:do_request) { users_call }
+    let!(:login) { create_user.value }
 
     before { users_call }
 
@@ -22,12 +23,18 @@ RSpec.describe 'GET /users' do
       expect(res).to be_a(Hash)
       expect(res).to have_key('users')
       expect(res['users']).to be_an(Array)
-      expect(res['users']).to be_empty
+      expect(res['users']).to_not be_empty
     end
   end
 
   private
   def users_call(params={})
-    get '/users', params, base_env
+    get '/users', base_params.merge(params), base_env
+  end
+
+  def base_params
+    {
+      access_token: login[:token]
+    }
   end
 end

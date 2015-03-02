@@ -5,6 +5,7 @@ RSpec.describe 'POST /products' do
 
   it_behaves_like "API over HTTPS with Basic Auth" do
     let(:do_request){ create_product_call }
+    let!(:login) { create_user.value }
 
     context 'invalid params' do
       let(:do_request){ create_product_call(name: nil) }
@@ -52,7 +53,8 @@ RSpec.describe 'POST /products' do
 
   def base_params
     {
-      name: 'FOO',
+      name: 'Foo',
+      access_token: login[:token]
     }
   end
 end

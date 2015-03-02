@@ -1,20 +1,21 @@
 module TestHelpers
   def create_product
-    product = {
-      name: 'foo'
-    }
-    ROM.env.command(:products).try {
-      ROM.env.command(:products).create.call(product)
+    product = { name: 'Foo' }
+    ROM.env.commands.products.try {
+      ROM.env.commands.products.create.call(product)
     }
   end
 
   def create_user
-    data = {
-      email: 'example@example.com',
-      password: 'password'
-    }
-    ROM.env.command(:users).try {
-      ROM.env.command(:users).create.call(data)
-    }
+    begin
+      data = {
+        email: "example-#{rand(100)}@example.com",
+        password: 'password'
+      }
+      result = ROM.env.commands.users.try {
+        ROM.env.commands.users.create.call(data)
+      }
+    end while result.error
+    result
   end
 end

@@ -13,7 +13,7 @@ module API
 
     def json(hash)
       content_type :json
-      ::MultiJson.dump(hash)
+      ::MultiJson.dump(hash, pretty: true)
     end
 
     def record_not_found(params, fields=[:id])
@@ -24,13 +24,24 @@ module API
       json_error(422, "Invalid data for fields: #{fields.join(', ')}")
     end
 
-    def require_fields(fields)
-      missing = fields.map(&:to_s) - params.delete_if{|_,v| v.blank?}.keys
-      invalid_params(missing) unless missing.empty?
+    def delete_response
+      204
     end
 
     def rom
       ROM.env
     end
+
+    def convert_time(time)
+      case time
+      when Time
+        time.iso8601
+      when String
+        Time.parse(time).iso8601 rescue time
+      else
+        time
+      end
+    end
   end
 end
+
