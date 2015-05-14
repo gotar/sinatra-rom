@@ -2,11 +2,11 @@ module DB
   extend self
 
   def setup
-    load(root+'/../Rakefile')
-    Rake::Task["db:migrate"].invoke
+    setup_connection_to_db
     load_files
 
     ROM.finalize.env
+    ROM.env.repositories[:default].run_migrations
   end
 
   def setup_connection_to_db
