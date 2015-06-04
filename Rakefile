@@ -1,5 +1,7 @@
 require 'bundler/setup'
+require 'rom/sql'
 require 'rom/sql/rake_task'
+
 require_relative 'db/db'
 
 task :setup do
